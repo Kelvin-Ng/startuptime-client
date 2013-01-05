@@ -1,0 +1,33 @@
+#: startuptime.sh:11
+msgid "mins"
+msgstr ""
+#: startuptime.sh:11,14
+msgid "secs"
+msgstr ""
+#: startuptime.sh:24
+msgid "Version: "
+msgstr ""
+#: startuptime.sh:62
+msgid "Welcome"
+msgstr ""
+#: startuptime.sh:62
+msgid "Time needed: "
+msgstr ""
+#: startuptime.sh:63
+msgid "Time needed to reach desktop: "
+msgstr ""
+#: startuptime.sh:64
+msgid "Overall time needed: "
+msgstr ""
+#: startuptime.sh:65
+msgid "Ranking: "
+msgstr ""
+#: startuptime.sh:66
+msgid "Faster than"
+msgstr ""
+#: startuptime.sh:66
+msgid "% computers"
+msgstr ""
+#: startuptime.sh:67
+msgid "Desktop using: "
+msgstr ""

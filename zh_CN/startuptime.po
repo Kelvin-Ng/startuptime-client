@@ -1,0 +1,33 @@
+#: startuptime.sh:11
+msgid "mins"
+msgstr "分"
+#: startuptime.sh:11,14
+msgid "secs"
+msgstr "秒"
+#: startuptime.sh:24
+msgid "Version: "
+msgstr "版本："
+#: startuptime.sh:62
+msgid "Welcome"
+msgstr "欢迎"
+#: startuptime.sh:62
+msgid "Time needed: "
+msgstr "开机时间："
+#: startuptime.sh:63
+msgid "Time needed to reach desktop: "
+msgstr "进入桌面时间："
+#: startuptime.sh:64
+msgid "Overall time needed: "
+msgstr "启动总耗时："
+#: startuptime.sh:65
+msgid "Ranking: "
+msgstr "全球排名："
+#: startuptime.sh:66
+msgid "Faster than"
+msgstr "击败了"
+#: startuptime.sh:66
+msgid "% computers"
+msgstr "% 的电脑"
+#: startuptime.sh:67
+msgid "Desktop using: "
+msgstr "桌面："
