@@ -56,29 +56,19 @@ if [ -z $_UTED ]; then
 	num=$(getnum)
 	percent=$(((num - pos) * 100 / num))
 	outDS
-	shopt -s nocasematch
-	if [ "$LANG" == "zh_CN.utf8" ]; then
-		notify-send "欢迎${LOGNAME}登录" "开机时间： ${outspara}
-		进入桌面时间： ${outdpara}
-		启动总耗时： ${outtpara}
-		全球排名：${pos}/${num}
-		击败了 ${percent}% 的电脑
-		桌面： ${DSession}"
-	elif [ "$LANG" == "zh_TW.utf8" ]; then
-		notify-send "歡迎${LOGNAME}登錄" "開機時間： ${outspara}
-		進入桌面時間： ${outdpara}
-		啟動總耗時： ${outtpara}
-		全球排名：${pos}/${num}
-		擊敗了${percent}% 的電腦
-		桌面： ${DSession}"
-	else
-		notify-send "Welcome ${LOGNAME}" "Time needed: ${outspara}
-		Time needed to reach desktop: ${outdpara}
-		Overall time needed: ${outtpara}
-		Ranking: ${pos}/${num}
-		Faster than ${percent}% computers
-		Desktop using: ${DSession}"
-	fi
+	lang=`echo ${LANG,,} | cut -d'.' -f1`
+	content=`cat $lang`
+	title=`echo "$content" | head -n 1`
+	msg=`echo "$content" | tail -n 6` 
+	title=`echo "$title" | sed 's/${LOGNAME}/'"${LOGNAME}/g"`
+	msg=`echo "$msg" | sed 's/${outspara}/'"${outspara}/g"`
+	msg=`echo "$msg" | sed 's/${outdpara}/'"${outdpara}/g"`
+	msg=`echo "$msg" | sed 's/${outtpara}/'"${outtpara}/g"`
+	msg=`echo "$msg" | sed 's/${pos}/'"${pos}/g"`
+	msg=`echo "$msg" | sed 's/${num}/'"${num}/g"`
+	msg=`echo "$msg" | sed 's/${percent}/'"${percent}/g"`
+	msg=`echo "$msg" | sed 's/${DSession}/'"${DSession}/g"`
+	notify-send "$title" "$msg"
 	shopt -u nocasematch
 fi
 export _UTED=0

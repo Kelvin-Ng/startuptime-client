@@ -1,0 +1,7 @@
+Welcome ${LOGNAME}
+Time needed: ${outspara}
+Time needed to reach desktop: ${outdpara}
+Overall time needed: ${outtpara}
+Ranking: ${pos}/${num}
+Faster than ${percent}% computers
+Desktop using: ${DSession}
