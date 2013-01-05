@@ -22,9 +22,14 @@ outDS()
 	fi
 }
 
+getmac()
+{
+	echo ifconfig | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}'
+}
+
 getpos()
 {
-	wget -qO- "http://94.249.172.128/startuptime/getpos.php?t=$stt"
+	wget -qO- "http://94.249.172.128/startuptime/getpos.php?time=$stt&mac=$(getmac)"
 }
 
 getnum()
