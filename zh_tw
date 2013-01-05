@@ -1,7 +1,0 @@
-歡迎 ${LOGNAME} 登錄
-開機時間：${outspara}
-進入桌面時間：${outdpara}
-啟動總耗時：${outtpara}
-全球排名：${pos}/${num}
-擊敗了 ${percent}% 的電腦
-桌面：${DSession}

@@ -3,13 +3,17 @@
 # Author: qpalz, realasking, 九十钩圈凯_ @ tieba.biadu.com
 # Original version: http://tieba.baidu.com/p/1959641775?pid=25913711903
 
+TEXTDOMAIN=startuptime
+
 outputtime()
 {
 	t_tmp=`echo $stmp` && let tmin=t_tmp/60 && let tsec=t_tmp%60
 	if [ $tmin -gt 0 ]; then
-		outpara="$tmin 分 $tsec 秒"
+		#outpara="$tmin 分 $tsec 秒"
+		outpara="$tmin "$"mins"" $tsec "$"secs"
 	else
-		outpara="$t_tmp 秒"
+		#outpara="$t_tmp 秒"
+		outpara="$tsec "$"secs"
 	fi
 }
 
@@ -18,7 +22,8 @@ outDS()
 	DSession=`echo ${DESKTOP_SESSION}`
 	if [ $DSession == "kde-plasma" ]; then
 		dtmp=`kded4 -v|tail -n +2|head -n +1|cut -d"：" -f2`
-		DSession=$DSession" 运行版本："$dtmp 
+		#DSession=$DSession" 运行版本："$dtmp 
+		DSession="$DSession "$"Version: ""$dtmp"
 	fi
 }
 
@@ -56,18 +61,11 @@ if [ -z $_UTED ]; then
 	num=$(getnum)
 	percent=$(((num - pos) * 100 / num))
 	outDS
-	lang=`echo ${LANG,,} | cut -d'.' -f1`
-	content=`cat $lang`
-	title=`echo "$content" | head -n 1`
-	msg=`echo "$content" | tail -n 6` 
-	title=`echo "$title" | sed 's/${LOGNAME}/'"${LOGNAME}/g"`
-	msg=`echo "$msg" | sed 's/${outspara}/'"${outspara}/g"`
-	msg=`echo "$msg" | sed 's/${outdpara}/'"${outdpara}/g"`
-	msg=`echo "$msg" | sed 's/${outtpara}/'"${outtpara}/g"`
-	msg=`echo "$msg" | sed 's/${pos}/'"${pos}/g"`
-	msg=`echo "$msg" | sed 's/${num}/'"${num}/g"`
-	msg=`echo "$msg" | sed 's/${percent}/'"${percent}/g"`
-	msg=`echo "$msg" | sed 's/${DSession}/'"${DSession}/g"`
-	notify-send "$title" "$msg"
+	notify-send $"Welcome""${LOGNAME}" $"Time needed: ""${outspara}\n"\
+$"Time needed to reach desktop: ""${outdpara}\n"\
+$"Overall time needed: ""${outtpara}\n"\
+$"Ranking: ""${pos}/${num}\n"\
+$"Faster than"" ${percent}"$"% computers""\n"\
+$"Desktop using: ""${DSession}\n"
 fi
 export _UTED=0
