@@ -24,7 +24,7 @@ outDS()
 
 getmac()
 {
-	echo ifconfig | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}'
+	ifconfig | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}'
 }
 
 getpos()
