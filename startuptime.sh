@@ -58,7 +58,8 @@ if [ -z $_UTED ]; then
 	outDS
 	shopt -s nocasematch
 	if [ "$LANG" == "zh_CN.utf8" ]; then
-		"欢迎${LOGNAME}登录" "开机时间： ${outspara}
+		notify-send "欢迎${LOGNAME}登录" "开机时间： ${outspara}
+		进入桌面时间： ${outdpara}
 		启动总耗时： ${outtpara}
 		全球排名：${pos}/${num}
 		击败了 ${percent}% 的电脑
