@@ -1,10 +1,10 @@
 #!/bin/bash 
-#systemd 开机时间测试和显示脚本
-#编写：realasking
-#根据百度贴吧 九十钩圈凯_ 的看开机时间的脚本改进扩展得到
-#他的原帖位置是：http://tieba.baidu.com/p/1959641775?pid=25913711903
+# A simple tool to show the time taken to boot the OS (Linux with KDE and boot with systemd only)
+# Author: qpalz, realasking, 九十钩圈凯_ @ tieba.biadu.com
+# Original version: http://tieba.baidu.com/p/1959641775?pid=25913711903
 
-outputtime(){
+outputtime()
+{
 	t_tmp=`echo $stmp` && let tmin=t_tmp/60 && let tsec=t_tmp%60
 	if [ $tmin -gt 0 ]; then
 		outpara="$tmin 分 $tsec 秒"
@@ -13,7 +13,8 @@ outputtime(){
 	fi
 }
 
-outDS(){
+outDS()
+{
 	DSession=`echo ${DESKTOP_SESSION}`
 	if [ $DSession == "kde-plasma" ]; then
 		dtmp=`kded4 -v|tail -n +2|head -n +1|cut -d"：" -f2`
@@ -50,11 +51,28 @@ if [ -z $_UTED ]; then
 	num=$(getnum)
 	percent=$(((num - pos) * 100 / num))
 	outDS
-	notify-send "欢迎${LOGNAME}登录" "开机时间： ${outspara}
-	进入桌面时间： ${outdpara}
-	启动总耗时： ${outtpara}
-	全球排名：${pos}/${num}
-	击败了 ${percent}% 的电脑
-	桌面： ${DSession}"
+	shopt -s nocasematch
+	if [ "$LANG" == "zh_CN.utf8" ]; then
+		"欢迎${LOGNAME}登录" "开机时间： ${outspara}
+		启动总耗时： ${outtpara}
+		全球排名：${pos}/${num}
+		击败了 ${percent}% 的电脑
+		桌面： ${DSession}"
+	elif [ "$LANG" == "zh_TW.utf8" ]; then
+		notify-send "歡迎${LOGNAME}登錄" "開機時間： ${outspara}
+		進入桌面時間： ${outdpara}
+		啟動總耗時： ${outtpara}
+		全球排名：${pos}/${num}
+		擊敗了${percent}% 的電腦
+		桌面： ${DSession}"
+	else
+		notify-send "Welcome ${LOGNAME}" "Time needed: ${outspara}
+		Time needed to reach desktop: ${outdpara}
+		Overall time needed: ${outtpara}
+		Ranking: ${pos}/${num}
+		Faster than ${percent}% computers
+		Desktop using: ${DSession}"
+	fi
+	shopt -u nocasematch
 fi
 export _UTED=0
