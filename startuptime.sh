@@ -69,6 +69,5 @@ if [ -z $_UTED ]; then
 	msg=`echo "$msg" | sed 's/${percent}/'"${percent}/g"`
 	msg=`echo "$msg" | sed 's/${DSession}/'"${DSession}/g"`
 	notify-send "$title" "$msg"
-	shopt -u nocasematch
 fi
 export _UTED=0
