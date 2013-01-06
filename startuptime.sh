@@ -37,7 +37,7 @@ getmac()
 
 getpos()
 {
-	wget -qO- "http://94.249.172.128/startuptime/getpos.php?time=$stt&mac=$(getmac)"
+	wget -qO- "http://94.249.172.128/startuptime/getpos.php?time=$bootTime&mac=$(getmac)"
 }
 
 getnum()
