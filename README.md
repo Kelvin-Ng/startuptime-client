@@ -8,9 +8,9 @@ You can use it before installation but there will not be i18n.
 
 To install, use this command:
 
-	sudo ./install
+	sudo ./install.sh
 
 Use this command to uninstall:
 
-	sudo ./install -u
+	sudo ./install.sh -u
 
