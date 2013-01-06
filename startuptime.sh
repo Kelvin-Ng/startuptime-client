@@ -24,9 +24,10 @@ outDS()
 	DSession=`echo ${DESKTOP_SESSION}`
 	if [ $DSession == "kde-plasma" ]; then
 		dtmp=`kded4 -v|tail -n +2|head -n +1|cut -d"：" -f2`
-		#DSession=$DSession" 运行版本："$dtmp 
-		DSession="$DSession "$"Version: ""$dtmp"
+	elif [ $DSession == "gnome" ]; then
+		dtmp=`gnome-session --version|cut -d " " -f2`
 	fi
+	DSession="$DSession "$"Version: ""$dtmp"
 }
 
 getmac()
@@ -44,27 +45,24 @@ getnum()
 	wget -qO- "http://94.249.172.128/startuptime/getnum.php"
 }
 
-if [ -z $_UTED ]; then
-	uptime=`cat /proc/uptime | cut -f1 -d'.'`
-	outUptime=$(formatTime $uptime)
-	if [ -n "$use_initrd" ]; then
-		bootTime_tmp=`systemd-analyze | cut -d' ' -f13 | cut -d'm' -f1`
-	else
-		bootTime_tmp=`systemd-analyze | cut -d' ' -f10 | cut -d'm' -f1`
-	fi
-	bootTime=$((bootTime_tmp / 1000))
-	outBootTime=$(formatTime $bootTime)
-	desktopTime=$(($uptime - $bootTime))
-	outDesktopTime=$(formatTime desktopTime)
-	pos=$(getpos)
-	num=$(getnum)
-	percent=$(((num - pos) * 100 / num))
-	outDS
-	notify-send $"Welcome""${LOGNAME}" $"Time needed: ""${outBootTime}\n"\
+uptime=`cat /proc/uptime | cut -f1 -d'.'`
+outUptime=$(formatTime $uptime)
+if [ -n "$use_initrd" ]; then
+	bootTime_tmp=`systemd-analyze | cut -d' ' -f13 | cut -d'm' -f1`
+else
+	bootTime_tmp=`systemd-analyze | cut -d' ' -f10 | cut -d'm' -f1`
+fi
+bootTime=$((bootTime_tmp / 1000))
+outBootTime=$(formatTime $bootTime)
+desktopTime=$(($uptime - $bootTime))
+outDesktopTime=$(formatTime desktopTime)
+pos=$(getpos)
+num=$(getnum)
+percent=$(((num - pos) * 100 / num))
+outDS
+notify-send $"Welcome""${LOGNAME}" $"Time needed: ""${outBootTime}\n"\
 $"Time needed to reach desktop: ""${outDesktopTime}\n"\
 $"Overall time needed: ""${outUptime}\n"\
 $"Ranking: ""${pos}/${num}\n"\
 $"Faster than"" ${percent}"$"% computers""\n"\
 $"Desktop using: ""${DSession}\n"
-fi
-export _UTED=0
