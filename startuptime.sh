@@ -5,15 +5,17 @@
 
 TEXTDOMAIN=startuptime
 
-outputtime()
+use_initrd=	# set to yes, no, 1, 0, or anything means you boot with initrd,
+		# else leave it blank
+
+formatTime()
 {
-	t_tmp=`echo $stmp` && let tmin=t_tmp/60 && let tsec=t_tmp%60
-	if [ $tmin -gt 0 ]; then
-		#outpara="$tmin 分 $tsec 秒"
-		outpara="$tmin "$"mins"" $tsec "$"secs"
+	min=$(($1 / 60))
+	sec=$(($1 % 60))
+	if [ $min -gt 0 ]; then
+		echo "$min "$"mins"" $sec "$"secs"
 	else
-		#outpara="$t_tmp 秒"
-		outpara="$tsec "$"secs"
+		echo "$sec "$"secs"
 	fi
 }
 
@@ -43,27 +45,24 @@ getnum()
 }
 
 if [ -z $_UTED ]; then
-	stall=`cat /proc/uptime | cut -f1 -d'.'`
-	stmp=`echo $stall`
-	outputtime 
-	outtpara=$outpara 
-	#stt_tmp=`systemd-analyze | cut -d' ' -f13 | cut -d'm' -f1`
-	stt_tmp=`systemd-analyze | cut -d' ' -f10 | cut -d'm' -f1`
-	stt=`echo "$stt_tmp / 1000" | bc`
-	stmp=`echo $stt` 
-	outputtime
-	outspara=$outpara
-	stdesk=`echo "$stall - ${stt}" | bc`
-	stmp=`echo $stdesk`
-	outputtime
-	outdpara=$outpara
+	uptime=`cat /proc/uptime | cut -f1 -d'.'`
+	outUptime=$(formatTime $uptime)
+	if [ -n "$use_initrd" ]; then
+		bootTime_tmp=`systemd-analyze | cut -d' ' -f13 | cut -d'm' -f1`
+	else
+		bootTime_tmp=`systemd-analyze | cut -d' ' -f10 | cut -d'm' -f1`
+	fi
+	bootTime=$((bootTime_tmp / 1000))
+	outBootTime=$(formatTime $bootTime)
+	desktopTime=$(($uptime - $bootTime))
+	outDesktopTime=$(formatTime desktopTime)
 	pos=$(getpos)
 	num=$(getnum)
 	percent=$(((num - pos) * 100 / num))
 	outDS
-	notify-send $"Welcome""${LOGNAME}" $"Time needed: ""${outspara}\n"\
-$"Time needed to reach desktop: ""${outdpara}\n"\
-$"Overall time needed: ""${outtpara}\n"\
+	notify-send $"Welcome""${LOGNAME}" $"Time needed: ""${outBootTime}\n"\
+$"Time needed to reach desktop: ""${outDesktopTime}\n"\
+$"Overall time needed: ""${outUptime}\n"\
 $"Ranking: ""${pos}/${num}\n"\
 $"Faster than"" ${percent}"$"% computers""\n"\
 $"Desktop using: ""${DSession}\n"
