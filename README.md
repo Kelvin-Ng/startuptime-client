@@ -1,6 +1,6 @@
 #StartUpTime
 
-A simple tool to show the time taken to boot the OS and compare your time with others (Linux with KDE and boot with systemd only)
+A simple tool to show the time taken to boot the OS and compare your time with others (Linux boot with systemd only)
 
 ##Install
 
