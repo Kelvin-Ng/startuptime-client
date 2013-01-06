@@ -37,12 +37,12 @@ getmac()
 
 getpos()
 {
-	wget -qO- "http://94.249.172.128/startuptime/getpos.php?time=$bootTime&mac=$(getmac)"
+	wget -qO- "http://startuptime.qpalz.tk/getpos.php?time=$bootTime&mac=$(getmac)"
 }
 
 getnum()
 {
-	wget -qO- "http://94.249.172.128/startuptime/getnum.php"
+	wget -qO- "http://startuptime.qpalz.tk/getnum.php"
 }
 
 uptime=`cat /proc/uptime | cut -f1 -d'.'`
