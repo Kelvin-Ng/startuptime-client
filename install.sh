@@ -7,7 +7,7 @@ if [ "$1" == "-u" ]; then
 	rm /usr/share/locale/zh_TW/LC_MESSAGES/startuptime.mo
 	rm /usr/share/locale/zh_CN/LC_MESSAGES/startuptime.mo
 else
-	cp startuptime.sh /usr/bin
+	install -D -m755 startuptime.sh /usr/bin
 
 	msgfmt -o /usr/share/locale/zh_TW/LC_MESSAGES/startuptime.mo zh_TW/startuptime.po
 	msgfmt -o /usr/share/locale/zh_CN/LC_MESSAGES/startuptime.mo zh_CN/startuptime.po

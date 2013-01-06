@@ -8,6 +8,8 @@ TEXTDOMAIN=startuptime
 use_initrd=	# set to yes, no, 1, 0, or anything means you boot with initrd,
 		# else leave it blank
 
+ver=3
+
 formatTime()
 {
 	min=$(($1 / 60))
@@ -44,6 +46,18 @@ getnum()
 {
 	wget -qO- "http://startuptime.qpalz.tk/getnum.php"
 }
+
+checkUpdate()
+{
+	latest_ver=`wget -qO- "http://startuptime.qpalz.tk/client_ver.html"`
+	if [ $latest_ver -gt $ver ]; then
+		notify-send $"StartUpTime Update" \
+			$"Please update to v""$latest_ver""
+"$"Download: ""https://github.com/Kelvin-Ng/startuptime-client/archive/${latest_ver}.tar.gz"
+	fi
+}
+
+checkUpdate
 
 uptime=`cat /proc/uptime | cut -f1 -d'.'`
 outUptime=$(formatTime $uptime)
