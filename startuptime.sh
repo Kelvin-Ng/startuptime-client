@@ -5,7 +5,7 @@
 
 TEXTDOMAIN=startuptime
 
-ver=4
+ver=5
 
 formatTime()
 {
@@ -50,7 +50,7 @@ checkUpdate()
 	if [ $latest_ver -gt $ver ]; then
 		notify-send $"StartUpTime Update" \
 			$"Please update to v""$latest_ver""
-"$"Download: ""https://github.com/Kelvin-Ng/startuptime-client/archive/${latest_ver}.tar.gz"
+""<a href=\"https://github.com/Kelvin-Ng/startuptime-client/archive/v${latest_ver}.tar.gz\">"$"Download""</a>"
 	fi
 }
 
@@ -69,6 +69,9 @@ desktopTime=$(($uptime - $bootTime))
 outDesktopTime=$(formatTime desktopTime)
 pos=$(getpos)
 num=$(getnum)
+if [ $pos -gt $num ]; then
+	pos=$num
+fi
 percent=$(((num - pos) * 100 / num))
 outDS
 notify-send $"Welcome""${LOGNAME}" $"Time needed: ""${outBootTime}\n"\
