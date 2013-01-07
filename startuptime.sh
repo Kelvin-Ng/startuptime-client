@@ -5,10 +5,7 @@
 
 TEXTDOMAIN=startuptime
 
-use_initrd=	# set to yes, no, 1, 0, or anything means you boot with initrd,
-		# else leave it blank
-
-ver=3
+ver=4
 
 formatTime()
 {
@@ -61,11 +58,11 @@ checkUpdate
 
 uptime=`cat /proc/uptime | cut -f1 -d'.'`
 outUptime=$(formatTime $uptime)
-if [ -n "$use_initrd" ]; then
-	bootTime_tmp=`systemd-analyze | cut -d' ' -f13 | cut -d'm' -f1`
-else
-	bootTime_tmp=`systemd-analyze | cut -d' ' -f10 | cut -d'm' -f1`
+bootTime_tmp=`systemd-analyze | cut -d' ' -f13`
+if [ -z "$bootTime_tmp" ]; then
+	bootTime_tmp=`systemd-analyze | cut -d' ' -f10`
 fi
+bootTime_tmp=`echo $bootTime_tmp | cut -d'm' -f1`
 bootTime=$((bootTime_tmp / 1000))
 outBootTime=$(formatTime $bootTime)
 desktopTime=$(($uptime - $bootTime))
