@@ -63,8 +63,8 @@ outBootTime=$(formatTime $bootTime)
 desktopTime=$(($uptime - $bootTime))
 outDesktopTime=$(formatTime desktopTime)
 outPos=$(getpos)
-pos=`cut -d'/' -f1`
-num=`cut -d'/' -f2`
+pos=`echo $outPos | cut -d'/' -f1`
+num=`echo $outPos | cut -d'/' -f2`
 percent=$(((num - pos) * 100 / num))
 outDS
 notify-send $"Welcome""${LOGNAME}" $"Time needed: ""${outBootTime}\n"\
