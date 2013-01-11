@@ -5,7 +5,7 @@
 
 TEXTDOMAIN=startuptime
 
-ver=5
+ver=6
 
 formatTime()
 {
@@ -39,11 +39,6 @@ getpos()
 	wget -qO- "http://startuptime.qpalz.tk/getpos.php?time=$bootTime&mac=$(getmac)"
 }
 
-getnum()
-{
-	wget -qO- "http://startuptime.qpalz.tk/getnum.php"
-}
-
 checkUpdate()
 {
 	latest_ver=`wget -qO- "http://startuptime.qpalz.tk/client_ver.html"`
@@ -56,7 +51,7 @@ checkUpdate()
 
 checkUpdate
 
-uptime=`cat /proc/uptime | cut -f1 -d'.'`
+uptime=`cat /proc/uptime | cut -d'.' -f1`
 outUptime=$(formatTime $uptime)
 bootTime_tmp=`systemd-analyze | cut -d' ' -f13`
 if [ -z "$bootTime_tmp" ]; then
@@ -67,16 +62,14 @@ bootTime=$((bootTime_tmp / 1000))
 outBootTime=$(formatTime $bootTime)
 desktopTime=$(($uptime - $bootTime))
 outDesktopTime=$(formatTime desktopTime)
-pos=$(getpos)
-num=$(getnum)
-if [ $pos -gt $num ]; then
-	pos=$num
-fi
+outPos=$(getpos)
+pos=`cut -d'/' -f1`
+num=`cut -d'/' -f2`
 percent=$(((num - pos) * 100 / num))
 outDS
 notify-send $"Welcome""${LOGNAME}" $"Time needed: ""${outBootTime}\n"\
 $"Time needed to reach desktop: ""${outDesktopTime}\n"\
 $"Overall time needed: ""${outUptime}\n"\
-$"Ranking: ""${pos}/${num}\n"\
+$"Ranking: ""${outPos}\n"\
 $"Faster than"" ${percent}"$"% computers""\n"\
 $"Desktop using: ""${DSession}\n"
