@@ -9,8 +9,8 @@ ver=6
 
 formatTime()
 {
-	min=$(($1 / 60))
-	sec=$(($1 % 60))
+	min=$(bc <<< "$1 / 60")
+	sec=$(bc <<< "$1 % 60")
 	if [ $min -gt 0 ]; then
 		echo "$min "$"mins"" $sec "$"secs"
 	else
@@ -40,22 +40,30 @@ checkUpdate()
 
 checkUpdate
 
-uptime=`cat /proc/uptime | cut -d'.' -f1`
+uptime=`cat /proc/uptime | cut -d' ' -f1`
 outUptime=$(formatTime $uptime)
-bootTime_tmp=`systemd-analyze | cut -d' ' -f13`
-if [ -z "$bootTime_tmp" ]; then
-	bootTime_tmp=`systemd-analyze | cut -d' ' -f10`
+
+bootTime_str=`systemd-analyze | grep -o '= .*$'`
+bootTime_min=`echo $bootTime_str | grep -o '[0-9,\.]*min'`
+if [ -z "$bootTime_min" ]; then
+	bootTime_min=0
+else
+	bootTime_min=`echo $bootTime_min | grep -o '[0-9,\.]*'`
 fi
-bootTime_tmp=`echo $bootTime_tmp | cut -d'm' -f1`
-bootTime=$((bootTime_tmp / 1000))
+bootTime_sec=`echo $bootTime_str | grep -o '[0-9,\.]*s'`
+bootTime_sec=`echo $bootTime_sec | grep -o '[0-9,\.]*'`
+bootTime=$(bc <<< "scale=3; $bootTime_min * 60 + $bootTime_sec")
+
 outBootTime=$(formatTime $bootTime)
-desktopTime=$(($uptime - $bootTime))
-outDesktopTime=$(formatTime desktopTime)
+desktopTime=$(bc <<< "scale=3; $uptime - $bootTime")
+outDesktopTime=$(formatTime $desktopTime)
+
 outPos=$(getpos)
 pos=`echo $outPos | cut -d'/' -f1`
 num=`echo $outPos | cut -d'/' -f2`
-percent=$(((num - pos) * 100 / num))
-notify-send $"Welcome""${LOGNAME}" $"Time needed: ""${outBootTime}\n"\
+percent=$(bc <<< "($num - $pos) * 100 / $num")
+
+notify-send $"Welcome ""${LOGNAME}" $"Time needed: ""${outBootTime}\n"\
 $"Time needed to reach desktop: ""${outDesktopTime}\n"\
 $"Overall time needed: ""${outUptime}\n"\
 $"Ranking: ""${outPos}\n"\
