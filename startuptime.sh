@@ -1,10 +1,11 @@
 #!/bin/bash 
-# A simple tool to show the time taken to boot the OS (Linux with KDE and boot with systemd only)
+# A simple tool to show the time taken to boot the OS (Linux boot with systemd only)
 # Author: qpalz, realasking, 九十钩圈凯_ @ tieba.biadu.com
 # Original version: http://tieba.baidu.com/p/1959641775?pid=25913711903
 
 TEXTDOMAIN=startuptime
 
+SERVER_URL="http://startuptime.qpalz.tk" # do not need the trailing '/'
 ver=6
 
 formatTime()
@@ -25,12 +26,12 @@ getmac()
 
 getpos()
 {
-	wget -qO- "http://startuptime.qpalz.tk/getpos.php?time=$bootTime&mac=$(getmac)"
+	wget -qO- "${SERVER_URL}/getpos.php?time=$bootTime&mac=$(getmac)"
 }
 
 checkUpdate()
 {
-	latest_ver=`wget -qO- "http://startuptime.qpalz.tk/client_ver.html"`
+	latest_ver=`wget -qO- "${SERVER_URL}/client_ver.html"`
 	if [ $latest_ver -gt $ver ]; then
 		notify-send $"StartUpTime Update" \
 			$"Please update to v""$latest_ver""
