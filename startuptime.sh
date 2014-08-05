@@ -18,17 +18,6 @@ formatTime()
 	fi
 }
 
-outDS()
-{
-	DSession=`echo ${DESKTOP_SESSION}`
-	if [ $DSession == "kde-plasma" ]; then
-		dtmp=`kded4 -v|tail -n +2|head -n +1|cut -d":" -f2`
-	elif [ $DSession == "gnome" ]; then
-		dtmp=`gnome-session --version|cut -d " " -f2`
-	fi
-	DSession="$DSession "$"Version: ""$dtmp"
-}
-
 getmac()
 {
 	ifconfig | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}'
@@ -66,10 +55,8 @@ outPos=$(getpos)
 pos=`echo $outPos | cut -d'/' -f1`
 num=`echo $outPos | cut -d'/' -f2`
 percent=$(((num - pos) * 100 / num))
-outDS
 notify-send $"Welcome""${LOGNAME}" $"Time needed: ""${outBootTime}\n"\
 $"Time needed to reach desktop: ""${outDesktopTime}\n"\
 $"Overall time needed: ""${outUptime}\n"\
 $"Ranking: ""${outPos}\n"\
-$"Faster than"" ${percent}"$"% computers""\n"\
-$"Desktop using: ""${DSession}\n"
+$"Faster than"" ${percent}"$"% computers""\n"
