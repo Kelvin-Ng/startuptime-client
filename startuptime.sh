@@ -22,7 +22,7 @@ outDS()
 {
 	DSession=`echo ${DESKTOP_SESSION}`
 	if [ $DSession == "kde-plasma" ]; then
-		dtmp=`kded4 -v|tail -n +2|head -n +1|cut -d"：" -f2`
+		dtmp=`kded4 -v|tail -n +2|head -n +1|cut -d":" -f2`
 	elif [ $DSession == "gnome" ]; then
 		dtmp=`gnome-session --version|cut -d " " -f2`
 	fi
