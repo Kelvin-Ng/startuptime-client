@@ -5,7 +5,7 @@
 
 TEXTDOMAIN=startuptime
 
-SERVER_URL="http://startuptime.localhost" # do not need the trailing '/'
+SERVER_URL="http://startuptime.poker-lee.tk" # do not need the trailing '/'
 ver=7
 
 formatTime()
