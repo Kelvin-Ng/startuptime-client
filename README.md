@@ -1,6 +1,6 @@
 # StartUpTime
 
-A simple tool to show the time taken to boot the OS and compare your time with others (Linux boot with systemd only)
+A simple tool to show the time taken to boot the OS and compare your time with others
 
 ## Screenshot
 
@@ -16,7 +16,7 @@ Download the package at [AUR](https://aur.archlinux.org/packages/startuptime)
 
 ### Other distributions
 
-You can use it before installation but there will not be i18n.
+You can use it before installation without i18n support.
 
 To install, use this command:
 
@@ -30,7 +30,7 @@ Use this command to uninstall:
 
 ### Systemd
 
-Add <code>startuptime.sh</code> to your autostart configuration file.
+- Add <code>startuptime.sh</code> to your autostart configuration file.
 
 ### Sysvinit
 
