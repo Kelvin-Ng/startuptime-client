@@ -5,8 +5,8 @@
 
 TEXTDOMAIN=startuptime
 
-SERVER_URL="http://startuptime.qpalz.tk" # do not need the trailing '/'
-ver=6
+SERVER_URL="http://startuptime.localhost" # do not need the trailing '/'
+ver=7
 
 formatTime()
 {
