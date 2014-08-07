@@ -40,3 +40,7 @@ msgstr "% 的電腦"
 #: startuptime.sh:82
 msgid "Desktop using: "
 msgstr "桌面："
+#: startuptime.sh:434
+msgid "Distribution: "
+msgstr "發行版："
+

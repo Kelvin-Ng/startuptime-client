@@ -1,42 +1,51 @@
-#: startuptime.sh:18
+#: startuptime.sh:16
 msgid "mins"
 msgstr ""
-#: startuptime.sh:18,20
+
+#: startuptime.sh:16 startuptime.sh:18
 msgid "secs"
 msgstr ""
-#: startuptime.sh:32
-msgid "Version: "
-msgstr ""
-#: startuptime.sh:54
+
+#: startuptime.sh:36
 msgid "StartUpTime Update"
 msgstr ""
-#: startuptime.sh:55
+
+#: startuptime.sh:37
 msgid "Please update to v"
 msgstr ""
-#: startuptime.sh:56
-msgid "Download: "
+
+#: startuptime.sh:38
+msgid "Download"
 msgstr ""
-#: startuptime.sh:77
-msgid "Welcome"
+
+#: startuptime.sh:429
+msgid "Welcome "
 msgstr ""
-#: startuptime.sh:77
+
+#: startuptime.sh:429
 msgid "Time needed: "
 msgstr ""
-#: startuptime.sh:78
+
+#: startuptime.sh:430
 msgid "Time needed to reach desktop: "
 msgstr ""
-#: startuptime.sh:79
+
+#: startuptime.sh:431
 msgid "Overall time needed: "
 msgstr ""
-#: startuptime.sh:80
+
+#: startuptime.sh:432
 msgid "Ranking: "
 msgstr ""
-#: startuptime.sh:81
+
+#: startuptime.sh:433
 msgid "Faster than"
 msgstr ""
-#: startuptime.sh:81
+
+#: startuptime.sh:433
 msgid "% computers"
 msgstr ""
-#: startuptime.sh:82
-msgid "Desktop using: "
+
+#: startuptime.sh:434
+msgid "Distribution: "
 msgstr ""
