@@ -45,19 +45,18 @@ uptime=`cat /proc/uptime | cut -d' ' -f1`
 outUptime=$(formatTime $uptime)
 
 if [ "${SYSVINIT} " == "NO " ]; then
-    bootTime_str=`systemd-analyze | grep -o '= .*$'`
-    bootTime_min=`echo $bootTime_str | grep -o '[0-9,\.]*min'`
-    if [ -z "$bootTime_min" ]; then
-	bootTime_min=0
-    else
-	bootTime_min=`echo $bootTime_min | grep -o '[0-9,\.]*'`
-    fi
-    bootTime_sec=`echo $bootTime_str | grep -o '[0-9,\.]*s'`
-    bootTime_sec=`echo $bootTime_sec | grep -o '[0-9,\.]*'`
-    bootTime=$(bc <<< "scale=3; $bootTime_min * 60 + $bootTime_sec")
-    
+	bootTime_str=`systemd-analyze | grep -o '= .*$'`
+	bootTime_min=`echo $bootTime_str | grep -o '[0-9,\.]*min'`
+	if [ -z "$bootTime_min" ]; then
+		bootTime_min=0
+	else
+		bootTime_min=`echo $bootTime_min | grep -o '[0-9,\.]*'`
+	fi
+	bootTime_sec=`echo $bootTime_str | grep -o '[0-9,\.]*s'`
+	bootTime_sec=`echo $bootTime_sec | grep -o '[0-9,\.]*'`
+	bootTime=$(bc <<< "scale=3; $bootTime_min * 60 + $bootTime_sec")
 else
-    bootTime=$(cat /tmp/startuptime_temp || echo 0);
+	bootTime=$(cat /tmp/startuptime_temp || echo 0);
 fi
 
 outBootTime=$(formatTime $bootTime)
