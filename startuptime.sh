@@ -1,12 +1,12 @@
 #!/bin/bash 
 # A simple tool to show the time taken to boot the OS (Linux boot with systemd only)
 # Author: qpalz, realasking, 九十钩圈凯_ @ tieba.biadu.com
-# Original version: http://tieba.baidu.com/p/1959641775?pid=25913711903
+# Original version: http://tieba.baidu.com/p/1959641775
 
 TEXTDOMAIN=startuptime
-
-SERVER_URL="http://startuptime.poker-lee.tk" # do not need the trailing '/'
 ver=7
+[ -f /etc/startuptime.conf ] && . /etc/startuptime.conf || . startuptime.conf
+
 
 formatTime()
 {
@@ -26,7 +26,7 @@ getmac()
 
 getpos()
 {
-	wget -qO- "${SERVER_URL}/getpos.php?time=$bootTime&mac=$(getmac)"
+	wget -qO- "${SERVER_URL}/getpos.php?time=$uptime&mac=$(getmac)"
 }
 
 checkUpdate()
@@ -404,16 +404,21 @@ checkUpdate
 uptime=`cat /proc/uptime | cut -d' ' -f1`
 outUptime=$(formatTime $uptime)
 
-bootTime_str=`systemd-analyze | grep -o '= .*$'`
-bootTime_min=`echo $bootTime_str | grep -o '[0-9,\.]*min'`
-if [ -z "$bootTime_min" ]; then
+if [ "${SYSVINIT} " == "NO " ]; then
+    bootTime_str=`systemd-analyze | grep -o '= .*$'`
+    bootTime_min=`echo $bootTime_str | grep -o '[0-9,\.]*min'`
+    if [ -z "$bootTime_min" ]; then
 	bootTime_min=0
-else
+    else
 	bootTime_min=`echo $bootTime_min | grep -o '[0-9,\.]*'`
+    fi
+    bootTime_sec=`echo $bootTime_str | grep -o '[0-9,\.]*s'`
+    bootTime_sec=`echo $bootTime_sec | grep -o '[0-9,\.]*'`
+    bootTime=$(bc <<< "scale=3; $bootTime_min * 60 + $bootTime_sec")
+    
+else
+    bootTime=$(cat /tmp/startuptime_temp || echo 0);
 fi
-bootTime_sec=`echo $bootTime_str | grep -o '[0-9,\.]*s'`
-bootTime_sec=`echo $bootTime_sec | grep -o '[0-9,\.]*'`
-bootTime=$(bc <<< "scale=3; $bootTime_min * 60 + $bootTime_sec")
 
 outBootTime=$(formatTime $bootTime)
 desktopTime=$(bc <<< "scale=3; $uptime - $bootTime")
