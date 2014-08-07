@@ -4,7 +4,7 @@
 # Original version: http://tieba.baidu.com/p/1959641775
 
 TEXTDOMAIN=startuptime
-ver=7
+ver=8
 [ -f /etc/startuptime.conf ] && . /etc/startuptime.conf || . startuptime.conf
 
 
